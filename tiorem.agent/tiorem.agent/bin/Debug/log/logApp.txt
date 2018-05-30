@@ -29,3 +29,10 @@
 20180531 02:15:50			INFO			Timer started
 20180531 02:15:50			INFO			Excuted started
 20180531 02:16:02			INFO			Excuted comleted
+20180531 02:39:31			INFO			Manuel Excuted started
+20180531 02:41:11			INFO			Excuted comleted
+20180531 02:41:15			INFO			Manuel Excuted started
+20180531 02:43:45			INFO			Manuel Excuted started
+20180531 02:46:06			INFO			Manuel Excuted started
+20180531 02:49:04			INFO			Manuel Excuted started
+20180531 02:50:17			INFO			Excuted comleted

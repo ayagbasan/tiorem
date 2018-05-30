@@ -2,3 +2,5 @@
 20180531 02:22:37			INFO			Excuted started
 20180531 02:22:47			INFO			Excuted comleted
 20180531 02:22:48			INFO			Timer stopped
+20180531 02:39:16			INFO			Manuel Excuted started
+20180531 02:39:23			INFO			Excuted comleted

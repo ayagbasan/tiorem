@@ -66,7 +66,7 @@ namespace tiorem.agent
                         try
                         {
                             List<CatalogueSource> sources = context.CatalogueSource.Where(p => p.Active.Value).ToList();
-                            List<long> latestLocalArticlesId = context.Article.Where(p => p.InsertedAt.Value > prevMinute).Select(p => p.Id).ToList();
+                            List<long> latestLocalArticlesId = context.Article.Select(p => p.Id).ToList();
 
                             using (var wc = new WebClient())
                             {
@@ -96,6 +96,7 @@ namespace tiorem.agent
                                                 {
                                                     if (item.ArticleId.HasValue)
                                                     {
+                                                        DateTime pubDate = Convert.ToDateTime(item.ArticlePubDate);
                                                         if (latestLocalArticlesId.IndexOf(item.ArticleId.Value) == -1)
                                                         {
                                                             try
@@ -109,7 +110,7 @@ namespace tiorem.agent
                                                                 newArticle.Id = item.ArticleId.Value;
                                                                 newArticle.ImageUrl = item.ArticleImageUrl;
                                                                 newArticle.InsertedAt = now;
-                                                                newArticle.PubDate = Convert.ToDateTime(item.ArticlePubDate);
+                                                                newArticle.PubDate = pubDate;
                                                                 newArticle.SharingTitle = item.ArticleSharingTitle;
                                                                 newArticle.SourceId = source.Id;
                                                                 newArticle.SourceUrl = item.SourceUrl;
@@ -117,9 +118,6 @@ namespace tiorem.agent
                                                                 newArticle.TweetId = item.TwitterId;
                                                                 newArticle.VideoUrl = item.ArticleVideoUrl;
                                                                 newArticles.Add(newArticle);
-
-
-
                                                             }
                                                             catch (Exception ex)
                                                             {
