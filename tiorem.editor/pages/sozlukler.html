@@ -1,0 +1,141 @@
+﻿<template>
+    <div class="page" data-name="sozlukler">
+        <div class="navbar">
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link" onclick="app.methods.birOncekiSayfayaGit()">
+                        <i class="icon icon-back"></i>
+                        <span class="ios-only">Geri</span>
+                    </a>
+                </div>
+                <div class="title">{{this.$route.params.tag}}</div>
+                <div class="right">
+                    <a href="#" class="link" @click="duzenleSayfasinaGit(null)">
+                        <i class="fa fa-plus-circle"></i>
+                        <span class="ios-only">Yeni </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="toolbar toolbar-bottom-md">
+            <div class="toolbar-inner">
+                <a href="/sozlukIceAktar/{{this.$route.params.tag}}/"class="link"> <i class="fa fa-2x fa-list-alt" style="padding-right:4px" ></i> Toplu Ekle</a>
+                <a class="link" @click="duzenleSayfasinaGit(null)">  <i class="fa fa-2x  fa-gift" style="padding-right:4px"></i>Ekle</a>
+                <a class="link sortable-toggle" data-sortable=".sortable">  <i class="fa  fa-2x fa-sort" style="padding-right:4px"></i>Sırala</a>
+
+                
+            </div>
+        </div>
+        
+        <div class="page-content  hide-toolbar-on-scroll">
+
+
+            {{#js_if "sozlukService.tmpItemList.length!=0"}}
+            <div id="pnlHasItem">
+                <div class="block-title">{{this.$route.params.tag}} Listesi</div>
+                <div class="list media-list sortable" id="divHediyeList">
+                    <ul>
+                        {{#each itemList}}
+                        <li class="swipeout">
+                            <div class="swipeout-content">
+                                <a href="#" class="item-link item-content" @click="duzenleSayfasinaGit({{Id}})">
+                                    <div class="item-inner">
+                                        <div class="item-title-row">
+                                            <div class="item-title">
+                                                {{#if Aktif}}
+                                                <i class="fa fa-bell text-color-green"></i>
+                                                {{else}}
+                                                <i class="fa fa-bell text-color-gray"></i>
+                                                {{/if}}
+                                                <span style="padding-left:8px">
+                                                    {{Adi}}
+                                                </span>
+                                            </div>
+
+                                            <div class="item-after">
+                                                12
+                                            </div>
+                                        </div>
+                                        <div style="margin-left:30px">
+                                            <div class="item-subtitle">Açıklama: {{Aciklama}}</div>
+                                            <div class="item-text" style="font-size:13px">
+                                                Toplam Adet: 1.345.468
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="swipeout-actions-right">
+                                {{#if Aktif}}
+                                <a href="#" @click="durumDegistir({{Id}})" class="color-gray">Pasif</a>
+                                {{else}}
+                                <a href="#" @click="durumDegistir({{Id}})" class="color-green">Aktif </a>
+                                {{/if}}
+
+                                <a href="#" @click="sil({{Id}})" class="color-red">Sil</a>
+                            </div>
+
+                            <div class="sortable-handler"></div>
+                        </li>
+                        {{/each}}
+                    </ul>
+
+                </div>
+
+            </div>
+            {{else}}
+            <div id="pnlNoItem" style="margin:25px">
+
+
+                <div class="card">
+                    <div class="card-header">
+
+
+                        <h4> {{this.$route.params.tag}} Listesi Boş</h4>
+                        <i class="fa fa-2x fa-exclamation-triangle text-color-orange"></i>
+
+                    </div>
+                    <div class="card-content card-content-padding">
+
+                        <p>{{this.$route.params.tag}} listenizde kayıt bulunmuyor. Tekil ve çoklu olarak {{this.$route.params.tag}} ekleme işlemi yapabilirsiniz.</p>
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="/sozlukIceAktar/{{this.$route.params.tag}}/" class="link">  <i class="fa fa-list-alt"></i> Toplu Ekle</a>
+                        <a href="#" class="link" @click="duzenleSayfasinaGit(null)">  <i class="fa fa-gift"></i> Ekle</a>
+                    </div>
+                </div>
+            </div>
+
+            {{/js_if}}
+        </div>
+   
+    </div>
+
+
+
+</template>
+
+<style>
+    p {
+        margin: 10px 0;
+    }
+</style>
+
+<script>
+
+    var page = {
+       
+        beforeCreate: sozlukService.beforeCreate,
+        data: sozlukService.data,
+        methods: sozlukService.methods,
+        on: sozlukService.on
+    }
+
+     
+
+    return page;
+
+
+</script>

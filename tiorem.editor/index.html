@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#2196f3">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <title>Tiorem</title>
+    <link href="assets/css/framework7.min.css" rel="stylesheet" />
+    <link href="assets/icons/css/fontawesome-all.css" rel="stylesheet" />
+    <link href="assets/css/app.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <input id="newVersion" type="hidden" value="3" />
+    <input id="newVersionContent" type="hidden" value="1. Sıralama hatası giderildi.</br>2. Versiyon kontrolü eklendi.</br>3. Paylaştır sayfasına ziyaretler için  'Tümünü seç' özelliği eklendi</br>4. Yeni program eklenirken 'Tüm Programlar x Tüm Hediyeler' seçilir ise kartezyen olarak program oluşturulur" />
+
+    <div id="app">
+        <!-- Status bar overlay for fullscreen mode-->
+        <div class="statusbar"></div>
+        <!-- Left panel with cover effect-->
+        <div class="panel panel-left panel-cover">
+            <div class="view">
+                <div class="page">
+                    <div id="panelMenu" class="page-content">
+                        <div>
+                            <div style="text-align:center;margin-top:20px">
+                                <i class="fa fa-4x fa-gift text-color-red"></i>
+                            </div>
+                            <h3 class="text-color-red text-align-center">TİOREM</h3>
+
+                        </div>
+                        <div class="block-title">İşlemler</div>
+
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <a href="/islemYap/" class="item-link item-content panel-close">
+                                        <div class="item-media">
+                                            <i class="fa fa-calculator text-color-red"></i>
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="item-title">İşlem Yap</div>
+
+                                        </div>
+                                    </a>
+                                </li>
+                               
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="view view-main ios-edges">
+            <div class="page" data-name="index">
+
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="left">
+                            <a href="#" class="link icon-only panel-open" data-panel="left">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </div>
+                        <div class="title sliding">Ana Sayfa</div>
+
+                    </div>
+                </div>
+
+                <div class="page-content">
+                    <div class="block">
+
+                    
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+
+    </div>
+    <!-- Cordova -->
+    <!--
+    <script src="cordova.js"></script>
+    -->
+    <!-- Framework7 library -->
+
+    <script src="assets/js/framework7.min.js"></script>
+    <script src="assets/js/template7.min.js"></script>
+    <script src="assets/js/numeral.min.js"></script>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/routes.js"></script>
+     
+    <script src="assets/services/dataLayer.js"></script> 
+    <script src="assets/services/islemService.js"></script>
+    <script src="assets/js/app.js"></script>
+
+
+</body>
+
+</html>
