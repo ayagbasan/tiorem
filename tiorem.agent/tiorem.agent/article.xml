@@ -1,0 +1,138 @@
+<xml encoding="UTF-8">
+  <script id="tinyhippos-injected"/>
+  <smrtLck>1</smrtLck>
+  <showIndicator>0</showIndicator>
+  <nabdScreenName>@NabizApp</nabdScreenName>
+  <enablePushVibration>0</enablePushVibration>
+  <srvcRun>1</srvcRun>
+  <srvcSec>86400</srvcSec>
+  <showSoundSettings>1</showSoundSettings>
+  <showAppBadge>1</showAppBadge>
+  <appBadgeCount>1</appBadgeCount>
+  <appBadgeTime>14</appBadgeTime>
+  <askForPush>0</askForPush>
+  <feedFlag>FLAG</feedFlag>
+  <defaultPageTitle>Gündem</defaultPageTitle>
+  <defaultPageUrl>http://nabizapp.com/app/v1.3/cover_stories.php?</defaultPageUrl>
+  <defaultPageSourceID>-1</defaultPageSourceID>
+  <hideRefreshedArticlesView>1</hideRefreshedArticlesView>
+  <hideRefreshedArticlesViewTime>10</hideRefreshedArticlesViewTime>
+  <localNotifications>...</localNotifications>
+  <maxArticles>30</maxArticles>
+  <underPressure>0</underPressure>
+  <backgroundTime>20</backgroundTime>
+  <popup>0</popup>
+  <popupUrl/>
+  <splashUrl/>
+  <facebookFullscreenPopup>0</facebookFullscreenPopup>
+  <facebookFullscreenPopupPlacementId/>
+  <fullscreenPopup>0</fullscreenPopup>
+  <fullscreenPopupUnitId>ca-mb-app-pub-9251676229361652/1482019774</fullscreenPopupUnitId>
+  <interstitial>0</interstitial>
+  <interstitialUnitId/>
+  <interstitialCounter>0</interstitialCounter>
+  <interstitialExtras>0</interstitialExtras>
+  <interstitialCustomTargeting>...</interstitialCustomTargeting>
+  <fullscreenPopupExtras>1</fullscreenPopupExtras>
+  <fullscreenPopupCustomTargeting>...</fullscreenPopupCustomTargeting>
+  <fullscreenPopupBeginWith>AdMob</fullscreenPopupBeginWith>
+  <refreshingArticles>1</refreshingArticles>
+  <refreshingArticlesTime>180</refreshingArticlesTime>
+  <newversion>0</newversion>
+  <newversionUrl/>
+  <register>0</register>
+  <newSources>0</newSources>
+  <newSourcesId>0</newSourcesId>
+  <showMenuTooltip>0</showMenuTooltip>
+  <menuTooltipId>0</menuTooltipId>
+  <menuTooltipTitle/>
+  <isUserRegistered/>
+  <pushStatus/>
+  <pushToken/>
+  <showSourceProfile>1</showSourceProfile>
+  <sourceProfile>...</sourceProfile>
+  <showSourceProfile>1</showSourceProfile>
+  <articles>
+    <article>
+      <sourceId>20</sourceId>
+      <sourceName>Haber 7</sourceName>
+      <sourceImageUrl>
+        https://pbs.twimg.com/profile_images/469455894208466945/EiznJxn0_bigger.png
+      </sourceImageUrl>
+      <sourceUrl>http://t.co/Ana6oT6okF</sourceUrl>
+      <twitterId>120840897</twitterId>
+      <twitterScreenName>Haber7</twitterScreenName>
+      <hideSourceLogo>0</hideSourceLogo>
+      <hideInsideSourceLogo>0</hideInsideSourceLogo>
+      <articleId>13096947</articleId>
+      <articleUrl>
+        <![CDATA[
+http://nabizapp.com/original_story.php?aid=13096947
+]]>
+      </articleUrl>
+      <articleTitle>'Oruç tutmadığı için Allah onu cezalandırdı'</articleTitle>
+      <articleSharingTitle>'Oruç tutmadığı için Allah onu cezalandırdı'</articleSharingTitle>
+      <forceOpenAsArticle>0</forceOpenAsArticle>
+      <articleBody>
+        . Kuveytli din adamı Mubarak al-Bathali, Real Madrid karşısında 33. dakikada omuzundan sakatlandığı için oyundan çıkan Mohammad Salah'ın sakatlığının oruç tutmadığı için Allah tarafından bir ceza olduğunu söyledi.~"Allah, oruç tutmadığı için Salah'ı cezalandırdı. Hayatımız Allah'ın elinde, yaptıklarımıza göre şekilleniyor. İyiyi ve kötüyü o biliyor. Belki de sakatlık onun için daha iyiydi."~"ALLAH TARAFINDAN BİR CEZA"~Al-Bathali, müslümanlara seyahat etmeleri durumunda oruç tutmama izni verilmesine rağmen bu Salah'ın İngiltere'den Ukranya'ya seyahat ettiği için değil, maç için oruç tutmaya niyetlenmediği için günah işlediğini ve sakatlığının Allah tarafından bir ceza.....~Haberin devamını okumak için aşağıdaki "Web sitesinde oku" butonuna dokunun.
+      </articleBody>
+      <articlePubDate>2018-05-30 22:01:11</articlePubDate>
+      <articleDetailedDate>Çarşamba, 30 Mayıs 2018</articleDetailedDate>
+      <articleBreaking>0</articleBreaking>
+      <articleHits>0</articleHits>
+      <articleTweetId>1001901340963082240</articleTweetId>
+      <articleVideoUrl/>
+      <articleImageUrl>
+        <![CDATA[ https://pbs.twimg.com/media/Ded39bVVwAI2OwN.jpg ]]>
+      </articleImageUrl>
+      <youtubeBaseURL>http://www.youtube.com/watch?v=</youtubeBaseURL>
+      <autoPlayVideo>0</autoPlayVideo>
+      <favorited>0</favorited>
+      <articleComments>0</articleComments>
+      <showComments>0</showComments>
+      <showViews>0</showViews>
+      <social>1</social>
+      <alignment>left</alignment>
+      <sharingScreen>@NabizApp</sharingScreen>
+      <twitterSignature>- Nabız üzerinden</twitterSignature>
+      <sharingSignature>- Nabız uygulaması üzerinden paylaşıldı</sharingSignature>
+      <whatsappSignature>
+        ~~Nabız uygulaması üzerinden paylaşıldı~http://bit.ly/1RCwJpc
+      </whatsappSignature>
+      <moreSocialNetworksSignature>
+        ~~Bu yazı Nabız iOS ve Android uygulamasıyla paylaşılmıştır. Hemen ÜCRETSİZ indirin~http://bit.ly/1oUYBMc
+      </moreSocialNetworksSignature>
+      <shareWhatsAppInsideApp>0</shareWhatsAppInsideApp>
+      <instaSignature/>
+      <tweetLength>140</tweetLength>
+      <tweetLinkLength>30</tweetLinkLength>
+      <showCopyLink>1</showCopyLink>
+      <srcNameWhenShare>1</srcNameWhenShare>
+      <promoted>0</promoted>
+      <canShare>1</canShare>
+      <canComment>1</canComment>
+      <canFavorite>1</canFavorite>
+      <sharingUrl>http://nabizapp.com/t/13096947</sharingUrl>
+      <flag>XYZ</flag>
+      <rtlMark>0</rtlMark>
+      <trackArticle>1</trackArticle>
+      <clickableSource>0</clickableSource>
+      <sourceArticlesUrl>
+        https://nabizapp.com/app/v1.3/articles_by_source.php?source_id=20
+      </sourceArticlesUrl>
+      <imageHeight>165</imageHeight>
+      <showGPlus>0</showGPlus>
+      <useBottomSheet>0</useBottomSheet>
+      <showFloatingAction>0</showFloatingAction>
+      <promotedOpenInSafari>0</promotedOpenInSafari>
+      <openInSFSafari>0</openInSFSafari>
+      <sfSafariOpenReaderView>0</sfSafariOpenReaderView>
+      <pcw>0</pcw>
+      <dim>1</dim>
+      <moreFromThisSource>1</moreFromThisSource>
+      <showBottomBar>1</showBottomBar>
+      <commentMaxChars>700</commentMaxChars>
+    </article>
+
+  </articles>
+</xml>

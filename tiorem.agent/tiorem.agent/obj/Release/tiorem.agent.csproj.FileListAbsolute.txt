@@ -1,0 +1,17 @@
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Release\tiorem.agent.exe.config
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Release\tiorem.agent.exe
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Release\tiorem.agent.pdb
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Release\EntityFramework.dll
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Release\Newtonsoft.Json.dll
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Release\EntityFramework.xml
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Release\Newtonsoft.Json.xml
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.Form1.resources
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.frmCatalogueSource.resources
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.Properties.Resources.resources
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.csproj.GenerateResource.cache
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.csproj.CoreCompileInputs.cache
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.csproj.CopyComplete
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.exe
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.pdb

@@ -1,0 +1,45 @@
+<xml encoding='UTF-8'>
+  <!-- New sources ID -->
+  <newSourcesId></newSourcesId>
+  <minNumberOfFollows>1</minNumberOfFollows>
+  <showTutorial>0</showTutorial>
+  <showMySources>1</showMySources>
+  <mySourcesCatId>-100</mySourcesCatId>
+  <mySourcesCatImageURL>https://nabizapp.com/app/images/colorful/my_sources.png</mySourcesCatImageURL>
+  <mySourcesCatName>Kaynaklarım</mySourcesCatName>
+  <mySourcesCatBackground>FDFDFD</mySourcesCatBackground>
+  <categories>
+    <category>
+      <categoryId>37</categoryId>
+      <categoryName>Gazeteler</categoryName>
+      <categoryImageUrl>http://nabizapp.com/app/images/colorful/newspaper.png</categoryImageUrl>
+      <categoryDateAdded>2015-09-30 18:38:47</categoryDateAdded>
+      <categoryHasNewSources>0</categoryHasNewSources>
+      <categoryBackground>FDFDFD</categoryBackground>
+      <subCategories>
+        <subCategory>
+          <subCategoryId>43</subCategoryId>
+          <subCategoryName>Basılan Gazeteler</subCategoryName>
+          <subCategoryImageUrl></subCategoryImageUrl>
+          <sources>
+            <source>
+              <sourceId>1</sourceId>
+              <sourceName>Hürriyet</sourceName>
+              <sourceDescription>Türkiye'nin açılış sayfası!</sourceDescription>
+              <sourceDescription></sourceDescription>
+              <sourceImageUrl>https://pbs.twimg.com/profile_images/878142629363539968/_NSLvG0i_bigger.jpg</sourceImageUrl>
+              <sourceUrl>http://t.co/T1Xn6zec0c</sourceUrl>
+              <followers>0</followers>
+              <new>0</new>
+              <sourceBackground>FDFDFD</sourceBackground>
+              <followed>0</followed>
+              <hideSourceLogo>0</hideSourceLogo>
+              <leaveMargin>0</leaveMargin>
+              <verified>0</verified>
+            </source>
+          </sources>
+        </subCategory>
+      </subCategories>
+    </category>
+  </categories>
+</xml>

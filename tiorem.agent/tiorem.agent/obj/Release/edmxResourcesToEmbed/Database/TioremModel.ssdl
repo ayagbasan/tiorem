@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TIOREMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Article">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="SourceId" Type="int" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="SourceUrl" Type="nvarchar(max)" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="SharingTitle" Type="nvarchar(max)" />
+    <Property Name="Body" Type="nvarchar(max)" />
+    <Property Name="PubDate" Type="datetime2" Precision="7" />
+    <Property Name="DetailedDate" Type="nvarchar(max)" />
+    <Property Name="TweetId" Type="nvarchar(max)" />
+    <Property Name="VideoUrl" Type="nvarchar(max)" />
+    <Property Name="ImageUrl" Type="nvarchar(max)" />
+    <Property Name="FavoriteHits" Type="int" />
+    <Property Name="Hits" Type="int" />
+    <Property Name="LikeHits" Type="int" />
+    <Property Name="UnlikeHits" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="Approved" Type="bit" />
+    <Property Name="ApprovedUserId" Type="int" />
+    <Property Name="ApprovedAt" Type="datetime2" Precision="7" />
+    <Property Name="InsertedAt" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="ArticleTag">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ArticleId" Type="bigint" />
+    <Property Name="TagId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="CatalogueCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar(max)" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="CatalogueSource">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="ImageUrl" Type="nvarchar(max)" />
+    <Property Name="SourceUrl" Type="nvarchar(max)" />
+    <Property Name="Followers" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="CatalogueTag">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TagName" Type="nvarchar(max)" />
+    <Property Name="Hits" Type="int" />
+    <Property Name="InsertDate" Type="datetime2" Precision="7" />
+    <Property Name="InsertUserId" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Article_CatalogueCategory">
+    <End Role="CatalogueCategory" Type="Self.CatalogueCategory" Multiplicity="0..1" />
+    <End Role="Article" Type="Self.Article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatalogueCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArticleTag_Article">
+    <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+    <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Article">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArticleTag">
+        <PropertyRef Name="ArticleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArticleTag_CatalogueTag">
+    <End Role="CatalogueTag" Type="Self.CatalogueTag" Multiplicity="0..1" />
+    <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatalogueTag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArticleTag">
+        <PropertyRef Name="TagId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CatalogueSource_Article">
+    <End Role="CatalogueSource" Type="Self.CatalogueSource" Multiplicity="0..1" />
+    <End Role="Article" Type="Self.Article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatalogueSource">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="SourceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TIOREMModelStoreContainer">
+    <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArticleTag" EntityType="Self.ArticleTag" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CatalogueCategory" EntityType="Self.CatalogueCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CatalogueSource" EntityType="Self.CatalogueSource" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CatalogueTag" EntityType="Self.CatalogueTag" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Article_CatalogueCategory" Association="Self.FK_Article_CatalogueCategory">
+      <End Role="CatalogueCategory" EntitySet="CatalogueCategory" />
+      <End Role="Article" EntitySet="Article" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArticleTag_Article" Association="Self.FK_ArticleTag_Article">
+      <End Role="Article" EntitySet="Article" />
+      <End Role="ArticleTag" EntitySet="ArticleTag" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArticleTag_CatalogueTag" Association="Self.FK_ArticleTag_CatalogueTag">
+      <End Role="CatalogueTag" EntitySet="CatalogueTag" />
+      <End Role="ArticleTag" EntitySet="ArticleTag" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CatalogueSource_Article" Association="Self.FK_CatalogueSource_Article">
+      <End Role="CatalogueSource" EntitySet="CatalogueSource" />
+      <End Role="Article" EntitySet="Article" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
