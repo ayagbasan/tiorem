@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a031b25cd64d4c3db9c4a4e1530ac355" Name="Diagram1">
+        <EntityTypeShape EntityType="TIOREMModel.Article" Width="1.5" PointX="6" PointY="3" />
+        <EntityTypeShape EntityType="TIOREMModel.ArticleTag" Width="1.5" PointX="8.25" PointY="5" />
+        <EntityTypeShape EntityType="TIOREMModel.CatalogueCategory" Width="1.5" PointX="3.75" PointY="1.375" />
+        <EntityTypeShape EntityType="TIOREMModel.CatalogueSource" Width="1.5" PointX="3.75" PointY="9" />
+        <EntityTypeShape EntityType="TIOREMModel.CatalogueTag" Width="1.5" PointX="3" PointY="4.625" />
+        <EntityTypeShape EntityType="TIOREMModel.User" Width="1.5" PointX="0.75" PointY="4.5" />
+        <AssociationConnector Association="TIOREMModel.FK_Article_CatalogueCategory" />
+        <AssociationConnector Association="TIOREMModel.FK_Article_CatalogueSource" />
+        <AssociationConnector Association="TIOREMModel.FK_Article_User" />
+        <AssociationConnector Association="TIOREMModel.FK_ArticleTag_Article" />
+        <AssociationConnector Association="TIOREMModel.FK_ArticleTag_CatalogueTag" />
+        <AssociationConnector Association="TIOREMModel.FK_CatalogueTag_User" />
+        <EntityTypeShape EntityType="TIOREMModel.VW_ARTICLE_SUMMARY" Width="1.5" PointX="0.75" PointY="8.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

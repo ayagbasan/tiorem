@@ -30,6 +30,6 @@ namespace tiorem.agent.Database
         public virtual DbSet<CatalogueCategory> CatalogueCategory { get; set; }
         public virtual DbSet<CatalogueSource> CatalogueSource { get; set; }
         public virtual DbSet<CatalogueTag> CatalogueTag { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }

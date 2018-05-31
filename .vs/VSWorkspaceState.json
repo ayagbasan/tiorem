@@ -1,8 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\tiorem.agent",
-    "\\tiorem.agent\\tiorem.agent"
+    "\\tiorem.editor"
   ],
+  "SelectedNode": "\\tiorem.editor",
   "PreviewInSolutionExplorer": false
 }

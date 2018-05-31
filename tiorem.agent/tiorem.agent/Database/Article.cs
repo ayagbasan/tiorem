@@ -21,8 +21,9 @@ namespace tiorem.agent.Database
         }
     
         public long Id { get; set; }
-        public Nullable<int> SourceId { get; set; }
-        public Nullable<int> CategoryId { get; set; }
+        public int SourceId { get; set; }
+        public int CategoryId { get; set; }
+        public string ArticleUrl { get; set; }
         public string SourceUrl { get; set; }
         public string Title { get; set; }
         public string SharingTitle { get; set; }
@@ -32,19 +33,20 @@ namespace tiorem.agent.Database
         public string TweetId { get; set; }
         public string VideoUrl { get; set; }
         public string ImageUrl { get; set; }
-        public Nullable<int> FavoriteHits { get; set; }
-        public Nullable<int> Hits { get; set; }
-        public Nullable<int> LikeHits { get; set; }
-        public Nullable<int> UnlikeHits { get; set; }
-        public Nullable<bool> Active { get; set; }
-        public Nullable<bool> Approved { get; set; }
+        public int FavoriteHits { get; set; }
+        public int Hits { get; set; }
+        public int LikeHits { get; set; }
+        public int UnlikeHits { get; set; }
+        public bool Active { get; set; }
+        public bool Approved { get; set; }
         public Nullable<int> ApprovedUserId { get; set; }
         public Nullable<System.DateTime> ApprovedAt { get; set; }
-        public Nullable<System.DateTime> InsertedAt { get; set; }
+        public System.DateTime InsertedAt { get; set; }
     
         public virtual CatalogueCategory CatalogueCategory { get; set; }
+        public virtual CatalogueSource CatalogueSource { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArticleTag> ArticleTag { get; set; }
-        public virtual CatalogueSource CatalogueSource { get; set; }
     }
 }

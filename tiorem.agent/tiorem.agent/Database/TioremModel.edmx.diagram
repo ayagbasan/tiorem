@@ -5,16 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a42ed94cb999446a91718fd5b18d264c" Name="Diagram1">
-        <EntityTypeShape EntityType="TIOREMModel.Article" Width="1.5" PointX="3.5" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TIOREMModel.ArticleTag" Width="1.5" PointX="5.5" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="TIOREMModel.CatalogueCategory" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TIOREMModel.CatalogueSource" Width="2.125" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TIOREMModel.CatalogueTag" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TIOREMModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="6.875" IsExpanded="true" />
-        <AssociationConnector Association="TIOREMModel.FK_Article_CatalogueCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="TIOREMModel.FK_ArticleTag_Article" ManuallyRouted="false" />
-        <AssociationConnector Association="TIOREMModel.FK_CatalogueSource_Article" ManuallyRouted="false" />
-        <AssociationConnector Association="TIOREMModel.FK_ArticleTag_CatalogueTag" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TIOREMModel.Article" Width="1.5" PointX="6" PointY="3" />
+        <EntityTypeShape EntityType="TIOREMModel.ArticleTag" Width="1.5" PointX="8.25" PointY="5" />
+        <EntityTypeShape EntityType="TIOREMModel.CatalogueCategory" Width="1.5" PointX="3.75" PointY="1.375" />
+        <EntityTypeShape EntityType="TIOREMModel.CatalogueSource" Width="1.5" PointX="3.75" PointY="9" />
+        <EntityTypeShape EntityType="TIOREMModel.CatalogueTag" Width="1.5" PointX="3" PointY="4.625" />
+        <EntityTypeShape EntityType="TIOREMModel.User" Width="1.5" PointX="0.75" PointY="4.5" />
+        <AssociationConnector Association="TIOREMModel.FK_Article_CatalogueCategory" />
+        <AssociationConnector Association="TIOREMModel.FK_Article_CatalogueSource" />
+        <AssociationConnector Association="TIOREMModel.FK_Article_User" />
+        <AssociationConnector Association="TIOREMModel.FK_ArticleTag_Article" />
+        <AssociationConnector Association="TIOREMModel.FK_ArticleTag_CatalogueTag" />
+        <AssociationConnector Association="TIOREMModel.FK_CatalogueTag_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

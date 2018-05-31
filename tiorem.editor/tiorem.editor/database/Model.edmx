@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TIOREMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="SourceId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="ArticleUrl" Type="nvarchar(max)" />
+          <Property Name="SourceUrl" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="SharingTitle" Type="nvarchar(max)" />
+          <Property Name="Body" Type="nvarchar(max)" />
+          <Property Name="PubDate" Type="datetime2" Precision="7" />
+          <Property Name="DetailedDate" Type="nvarchar(max)" />
+          <Property Name="TweetId" Type="nvarchar(max)" />
+          <Property Name="VideoUrl" Type="nvarchar(max)" />
+          <Property Name="ImageUrl" Type="nvarchar(max)" />
+          <Property Name="FavoriteHits" Type="int" Nullable="false" />
+          <Property Name="Hits" Type="int" Nullable="false" />
+          <Property Name="LikeHits" Type="int" Nullable="false" />
+          <Property Name="UnlikeHits" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="ApprovedUserId" Type="int" />
+          <Property Name="ApprovedAt" Type="datetime2" Precision="7" />
+          <Property Name="InsertedAt" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleTag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticleId" Type="bigint" />
+          <Property Name="TagId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="CatalogueCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CatalogueSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ImageUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SourceUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Followers" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CatalogueTag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Hits" Type="int" />
+          <Property Name="InsertDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="InsertUserId" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="InsertedAt" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TIOREM.dbo.VW_ARTICLE_SUMMARY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_ARTICLE_SUMMARY">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="SourceName" />
+            <PropertyRef Name="SourceId" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="Active" />
+            <PropertyRef Name="Approved" />
+            <PropertyRef Name="InsertedAt" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="SourceName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SourceId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="PubDate" Type="datetime2" Precision="7" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="ApprovedUserId" Type="int" />
+          <Property Name="InsertedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ApprovedAt" Type="datetime2" Precision="7" />
+          <Property Name="Username" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Article_CatalogueCategory">
+          <End Role="CatalogueCategory" Type="Self.CatalogueCategory" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogueCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_CatalogueSource">
+          <End Role="CatalogueSource" Type="Self.CatalogueSource" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogueSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="ApprovedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleTag_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleTag">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleTag_CatalogueTag">
+          <End Role="CatalogueTag" Type="Self.CatalogueTag" Multiplicity="0..1" />
+          <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogueTag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleTag">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CatalogueTag_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="CatalogueTag" Type="Self.CatalogueTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CatalogueTag">
+              <PropertyRef Name="InsertUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TIOREMModelStoreContainer">
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleTag" EntityType="Self.ArticleTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CatalogueCategory" EntityType="Self.CatalogueCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CatalogueSource" EntityType="Self.CatalogueSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CatalogueTag" EntityType="Self.CatalogueTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VW_ARTICLE_SUMMARY" EntityType="Self.VW_ARTICLE_SUMMARY" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[VW_ARTICLE_SUMMARY].[Id] AS [Id], 
+[VW_ARTICLE_SUMMARY].[SourceName] AS [SourceName], 
+[VW_ARTICLE_SUMMARY].[SourceId] AS [SourceId], 
+[VW_ARTICLE_SUMMARY].[CategoryId] AS [CategoryId], 
+[VW_ARTICLE_SUMMARY].[CategoryName] AS [CategoryName], 
+[VW_ARTICLE_SUMMARY].[Title] AS [Title], 
+[VW_ARTICLE_SUMMARY].[PubDate] AS [PubDate], 
+[VW_ARTICLE_SUMMARY].[Active] AS [Active], 
+[VW_ARTICLE_SUMMARY].[Approved] AS [Approved], 
+[VW_ARTICLE_SUMMARY].[ApprovedUserId] AS [ApprovedUserId], 
+[VW_ARTICLE_SUMMARY].[InsertedAt] AS [InsertedAt], 
+[VW_ARTICLE_SUMMARY].[ApprovedAt] AS [ApprovedAt], 
+[VW_ARTICLE_SUMMARY].[Username] AS [Username]
+FROM [dbo].[VW_ARTICLE_SUMMARY] AS [VW_ARTICLE_SUMMARY]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Article_CatalogueCategory" Association="Self.FK_Article_CatalogueCategory">
+            <End Role="CatalogueCategory" EntitySet="CatalogueCategory" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_CatalogueSource" Association="Self.FK_Article_CatalogueSource">
+            <End Role="CatalogueSource" EntitySet="CatalogueSource" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_User" Association="Self.FK_Article_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleTag_Article" Association="Self.FK_ArticleTag_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="ArticleTag" EntitySet="ArticleTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleTag_CatalogueTag" Association="Self.FK_ArticleTag_CatalogueTag">
+            <End Role="CatalogueTag" EntitySet="CatalogueTag" />
+            <End Role="ArticleTag" EntitySet="ArticleTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CatalogueTag_User" Association="Self.FK_CatalogueTag_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="CatalogueTag" EntitySet="CatalogueTag" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TIOREMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TIOREMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Article" EntityType="TIOREMModel.Article" />
+          <EntitySet Name="ArticleTag" EntityType="TIOREMModel.ArticleTag" />
+          <EntitySet Name="CatalogueCategory" EntityType="TIOREMModel.CatalogueCategory" />
+          <EntitySet Name="CatalogueSource" EntityType="TIOREMModel.CatalogueSource" />
+          <EntitySet Name="CatalogueTag" EntityType="TIOREMModel.CatalogueTag" />
+          <EntitySet Name="User" EntityType="TIOREMModel.User" />
+          <AssociationSet Name="FK_Article_CatalogueCategory" Association="TIOREMModel.FK_Article_CatalogueCategory">
+            <End Role="CatalogueCategory" EntitySet="CatalogueCategory" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_CatalogueSource" Association="TIOREMModel.FK_Article_CatalogueSource">
+            <End Role="CatalogueSource" EntitySet="CatalogueSource" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_User" Association="TIOREMModel.FK_Article_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleTag_Article" Association="TIOREMModel.FK_ArticleTag_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="ArticleTag" EntitySet="ArticleTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleTag_CatalogueTag" Association="TIOREMModel.FK_ArticleTag_CatalogueTag">
+            <End Role="CatalogueTag" EntitySet="CatalogueTag" />
+            <End Role="ArticleTag" EntitySet="ArticleTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CatalogueTag_User" Association="TIOREMModel.FK_CatalogueTag_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="CatalogueTag" EntitySet="CatalogueTag" />
+          </AssociationSet>
+          <EntitySet Name="VW_ARTICLE_SUMMARY" EntityType="TIOREMModel.VW_ARTICLE_SUMMARY" />
+        </EntityContainer>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="SourceId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ArticleUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SourceUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SharingTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PubDate" Type="DateTime" Precision="7" />
+          <Property Name="DetailedDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TweetId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VideoUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FavoriteHits" Type="Int32" Nullable="false" />
+          <Property Name="Hits" Type="Int32" Nullable="false" />
+          <Property Name="LikeHits" Type="Int32" Nullable="false" />
+          <Property Name="UnlikeHits" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="ApprovedUserId" Type="Int32" />
+          <Property Name="ApprovedAt" Type="DateTime" Precision="7" />
+          <Property Name="InsertedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="CatalogueCategory" Relationship="TIOREMModel.FK_Article_CatalogueCategory" FromRole="Article" ToRole="CatalogueCategory" />
+          <NavigationProperty Name="CatalogueSource" Relationship="TIOREMModel.FK_Article_CatalogueSource" FromRole="Article" ToRole="CatalogueSource" />
+          <NavigationProperty Name="User" Relationship="TIOREMModel.FK_Article_User" FromRole="Article" ToRole="User" />
+          <NavigationProperty Name="ArticleTag" Relationship="TIOREMModel.FK_ArticleTag_Article" FromRole="Article" ToRole="ArticleTag" />
+        </EntityType>
+        <EntityType Name="ArticleTag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticleId" Type="Int64" />
+          <Property Name="TagId" Type="Int64" />
+          <NavigationProperty Name="Article" Relationship="TIOREMModel.FK_ArticleTag_Article" FromRole="ArticleTag" ToRole="Article" />
+          <NavigationProperty Name="CatalogueTag" Relationship="TIOREMModel.FK_ArticleTag_CatalogueTag" FromRole="ArticleTag" ToRole="CatalogueTag" />
+        </EntityType>
+        <EntityType Name="CatalogueCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="TIOREMModel.FK_Article_CatalogueCategory" FromRole="CatalogueCategory" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="CatalogueSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SourceUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Followers" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="TIOREMModel.FK_Article_CatalogueSource" FromRole="CatalogueSource" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="CatalogueTag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Hits" Type="Int32" />
+          <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ArticleTag" Relationship="TIOREMModel.FK_ArticleTag_CatalogueTag" FromRole="CatalogueTag" ToRole="ArticleTag" />
+          <NavigationProperty Name="User" Relationship="TIOREMModel.FK_CatalogueTag_User" FromRole="CatalogueTag" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="InsertedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Article" Relationship="TIOREMModel.FK_Article_User" FromRole="User" ToRole="Article" />
+          <NavigationProperty Name="CatalogueTag" Relationship="TIOREMModel.FK_CatalogueTag_User" FromRole="User" ToRole="CatalogueTag" />
+        </EntityType>
+        <Association Name="FK_Article_CatalogueCategory">
+          <End Type="TIOREMModel.CatalogueCategory" Role="CatalogueCategory" Multiplicity="1" />
+          <End Type="TIOREMModel.Article" Role="Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogueCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_CatalogueSource">
+          <End Type="TIOREMModel.CatalogueSource" Role="CatalogueSource" Multiplicity="1" />
+          <End Type="TIOREMModel.Article" Role="Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogueSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_User">
+          <End Type="TIOREMModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="TIOREMModel.Article" Role="Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="ApprovedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleTag_Article">
+          <End Type="TIOREMModel.Article" Role="Article" Multiplicity="0..1" />
+          <End Type="TIOREMModel.ArticleTag" Role="ArticleTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleTag">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleTag_CatalogueTag">
+          <End Type="TIOREMModel.CatalogueTag" Role="CatalogueTag" Multiplicity="0..1" />
+          <End Type="TIOREMModel.ArticleTag" Role="ArticleTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogueTag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleTag">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CatalogueTag_User">
+          <End Type="TIOREMModel.User" Role="User" Multiplicity="1" />
+          <End Type="TIOREMModel.CatalogueTag" Role="CatalogueTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CatalogueTag">
+              <PropertyRef Name="InsertUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VW_ARTICLE_SUMMARY">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="SourceName" />
+            <PropertyRef Name="SourceId" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="Active" />
+            <PropertyRef Name="Approved" />
+            <PropertyRef Name="InsertedAt" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="SourceName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SourceId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PubDate" Type="DateTime" Precision="7" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="ApprovedUserId" Type="Int32" />
+          <Property Name="InsertedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ApprovedAt" Type="DateTime" Precision="7" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TIOREMModelStoreContainer" CdmEntityContainer="TIOREMEntities">
+          <EntitySetMapping Name="Article">
+            <EntityTypeMapping TypeName="TIOREMModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="InsertedAt" ColumnName="InsertedAt" />
+                <ScalarProperty Name="ApprovedAt" ColumnName="ApprovedAt" />
+                <ScalarProperty Name="ApprovedUserId" ColumnName="ApprovedUserId" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UnlikeHits" ColumnName="UnlikeHits" />
+                <ScalarProperty Name="LikeHits" ColumnName="LikeHits" />
+                <ScalarProperty Name="Hits" ColumnName="Hits" />
+                <ScalarProperty Name="FavoriteHits" ColumnName="FavoriteHits" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
+                <ScalarProperty Name="TweetId" ColumnName="TweetId" />
+                <ScalarProperty Name="DetailedDate" ColumnName="DetailedDate" />
+                <ScalarProperty Name="PubDate" ColumnName="PubDate" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="SharingTitle" ColumnName="SharingTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SourceUrl" ColumnName="SourceUrl" />
+                <ScalarProperty Name="ArticleUrl" ColumnName="ArticleUrl" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleTag">
+            <EntityTypeMapping TypeName="TIOREMModel.ArticleTag">
+              <MappingFragment StoreEntitySet="ArticleTag">
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CatalogueCategory">
+            <EntityTypeMapping TypeName="TIOREMModel.CatalogueCategory">
+              <MappingFragment StoreEntitySet="CatalogueCategory">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CatalogueSource">
+            <EntityTypeMapping TypeName="TIOREMModel.CatalogueSource">
+              <MappingFragment StoreEntitySet="CatalogueSource">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Followers" ColumnName="Followers" />
+                <ScalarProperty Name="SourceUrl" ColumnName="SourceUrl" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CatalogueTag">
+            <EntityTypeMapping TypeName="TIOREMModel.CatalogueTag">
+              <MappingFragment StoreEntitySet="CatalogueTag">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="InsertUserId" ColumnName="InsertUserId" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+                <ScalarProperty Name="Hits" ColumnName="Hits" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="TIOREMModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="InsertedAt" ColumnName="InsertedAt" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_ARTICLE_SUMMARY">
+            <EntityTypeMapping TypeName="TIOREMModel.VW_ARTICLE_SUMMARY">
+              <MappingFragment StoreEntitySet="VW_ARTICLE_SUMMARY">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ApprovedAt" ColumnName="ApprovedAt" />
+                <ScalarProperty Name="InsertedAt" ColumnName="InsertedAt" />
+                <ScalarProperty Name="ApprovedUserId" ColumnName="ApprovedUserId" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="PubDate" ColumnName="PubDate" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

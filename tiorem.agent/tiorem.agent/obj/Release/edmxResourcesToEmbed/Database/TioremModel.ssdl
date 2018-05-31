@@ -5,8 +5,9 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" Nullable="false" />
-    <Property Name="SourceId" Type="int" />
-    <Property Name="CategoryId" Type="int" />
+    <Property Name="SourceId" Type="int" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="ArticleUrl" Type="nvarchar(max)" />
     <Property Name="SourceUrl" Type="nvarchar(max)" />
     <Property Name="Title" Type="nvarchar(max)" />
     <Property Name="SharingTitle" Type="nvarchar(max)" />
@@ -16,15 +17,15 @@
     <Property Name="TweetId" Type="nvarchar(max)" />
     <Property Name="VideoUrl" Type="nvarchar(max)" />
     <Property Name="ImageUrl" Type="nvarchar(max)" />
-    <Property Name="FavoriteHits" Type="int" />
-    <Property Name="Hits" Type="int" />
-    <Property Name="LikeHits" Type="int" />
-    <Property Name="UnlikeHits" Type="int" />
-    <Property Name="Active" Type="bit" />
-    <Property Name="Approved" Type="bit" />
+    <Property Name="FavoriteHits" Type="int" Nullable="false" />
+    <Property Name="Hits" Type="int" Nullable="false" />
+    <Property Name="LikeHits" Type="int" Nullable="false" />
+    <Property Name="UnlikeHits" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="Approved" Type="bit" Nullable="false" />
     <Property Name="ApprovedUserId" Type="int" />
     <Property Name="ApprovedAt" Type="datetime2" Precision="7" />
-    <Property Name="InsertedAt" Type="datetime2" Precision="7" />
+    <Property Name="InsertedAt" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
   <EntityType Name="ArticleTag">
     <Key>
@@ -39,44 +40,47 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CategoryName" Type="nvarchar(max)" />
-    <Property Name="Active" Type="bit" />
+    <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="CatalogueSource">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" />
-    <Property Name="Description" Type="nvarchar(max)" />
-    <Property Name="ImageUrl" Type="nvarchar(max)" />
-    <Property Name="SourceUrl" Type="nvarchar(max)" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ImageUrl" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SourceUrl" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Followers" Type="int" />
-    <Property Name="Active" Type="bit" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="CatalogueTag">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TagName" Type="nvarchar(max)" />
+    <Property Name="TagName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Hits" Type="int" />
-    <Property Name="InsertDate" Type="datetime2" Precision="7" />
-    <Property Name="InsertUserId" Type="int" />
-    <Property Name="Active" Type="bit" />
+    <Property Name="InsertDate" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="InsertUserId" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
+  <EntityType Name="User">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="InsertedAt" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
   <Association Name="FK_Article_CatalogueCategory">
-    <End Role="CatalogueCategory" Type="Self.CatalogueCategory" Multiplicity="0..1" />
+    <End Role="CatalogueCategory" Type="Self.CatalogueCategory" Multiplicity="1" />
     <End Role="Article" Type="Self.Article" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CatalogueCategory">
@@ -84,6 +88,30 @@
       </Principal>
       <Dependent Role="Article">
         <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Article_CatalogueSource">
+    <End Role="CatalogueSource" Type="Self.CatalogueSource" Multiplicity="1" />
+    <End Role="Article" Type="Self.Article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatalogueSource">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="SourceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Article_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Article" Type="Self.Article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="ApprovedUserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -111,15 +139,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CatalogueSource_Article">
-    <End Role="CatalogueSource" Type="Self.CatalogueSource" Multiplicity="0..1" />
-    <End Role="Article" Type="Self.Article" Multiplicity="*" />
+  <Association Name="FK_CatalogueTag_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="CatalogueTag" Type="Self.CatalogueTag" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="CatalogueSource">
+      <Principal Role="User">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Article">
-        <PropertyRef Name="SourceId" />
+      <Dependent Role="CatalogueTag">
+        <PropertyRef Name="InsertUserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -129,9 +157,17 @@
     <EntitySet Name="CatalogueCategory" EntityType="Self.CatalogueCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CatalogueSource" EntityType="Self.CatalogueSource" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CatalogueTag" EntityType="Self.CatalogueTag" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Article_CatalogueCategory" Association="Self.FK_Article_CatalogueCategory">
       <End Role="CatalogueCategory" EntitySet="CatalogueCategory" />
+      <End Role="Article" EntitySet="Article" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Article_CatalogueSource" Association="Self.FK_Article_CatalogueSource">
+      <End Role="CatalogueSource" EntitySet="CatalogueSource" />
+      <End Role="Article" EntitySet="Article" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Article_User" Association="Self.FK_Article_User">
+      <End Role="User" EntitySet="User" />
       <End Role="Article" EntitySet="Article" />
     </AssociationSet>
     <AssociationSet Name="FK_ArticleTag_Article" Association="Self.FK_ArticleTag_Article">
@@ -142,9 +178,9 @@
       <End Role="CatalogueTag" EntitySet="CatalogueTag" />
       <End Role="ArticleTag" EntitySet="ArticleTag" />
     </AssociationSet>
-    <AssociationSet Name="FK_CatalogueSource_Article" Association="Self.FK_CatalogueSource_Article">
-      <End Role="CatalogueSource" EntitySet="CatalogueSource" />
-      <End Role="Article" EntitySet="Article" />
+    <AssociationSet Name="FK_CatalogueTag_User" Association="Self.FK_CatalogueTag_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="CatalogueTag" EntitySet="CatalogueTag" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

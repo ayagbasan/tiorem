@@ -15,3 +15,4 @@ C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem
 C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.csproj.CopyComplete
 C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.exe
 C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.pdb
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Release\tiorem.agent.csprojResolveAssemblyReference.cache

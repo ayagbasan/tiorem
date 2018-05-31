@@ -23,11 +23,12 @@ namespace tiorem.agent.Database
         public long Id { get; set; }
         public string TagName { get; set; }
         public Nullable<int> Hits { get; set; }
-        public Nullable<System.DateTime> InsertDate { get; set; }
-        public Nullable<int> InsertUserId { get; set; }
-        public Nullable<bool> Active { get; set; }
+        public System.DateTime InsertDate { get; set; }
+        public int InsertUserId { get; set; }
+        public bool Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArticleTag> ArticleTag { get; set; }
+        public virtual User User { get; set; }
     }
 }

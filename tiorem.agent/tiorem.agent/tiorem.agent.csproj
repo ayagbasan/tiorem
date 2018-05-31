@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="source.json" />
+    <Compile Include="Database\User.cs">
+      <DependentUpon>TioremModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\article.cs" />
     <Compile Include="Model\source.cs" />
     <Compile Include="Database\Article.cs">
@@ -72,9 +75,6 @@
       <DependentUpon>TioremModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\CatalogueTag.cs">
-      <DependentUpon>TioremModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\sysdiagrams.cs">
       <DependentUpon>TioremModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\TioremModel.Context.cs">

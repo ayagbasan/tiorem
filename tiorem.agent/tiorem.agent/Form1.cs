@@ -26,10 +26,11 @@ namespace tiorem.agent
         static string logAppfile = logPath + "\\logApp.txt";
         string logFileName = string.Empty;
         string urlPattern = "https://nabizapp.com/app/v1.3/android_articles_by_source.php?source_id={0}";
-        string logSeperator = "\t\t\t";
+        string logSeperator = "\t\t";
+        static ReaderWriterLockSlim _readWriteLock = new ReaderWriterLockSlim();
 
-         bool isThreadRunning = false;
-        
+        bool isThreadRunning = false;
+
         Thread thread = null;
 
         public Form1()
@@ -38,12 +39,12 @@ namespace tiorem.agent
             if (!Directory.Exists(logPath))
                 Directory.CreateDirectory(logPath);
             if (!File.Exists(logAppfile))
-                File.Create(logAppfile);
+                File.Create(logAppfile).Close();
 
             CheckForIllegalCrossThreadCalls = false;
         }
 
-        
+
         void execute()
         {
             if (thread != null)
@@ -65,7 +66,7 @@ namespace tiorem.agent
                     {
                         try
                         {
-                            List<CatalogueSource> sources = context.CatalogueSource.Where(p => p.Active.Value).ToList();
+                            List<CatalogueSource> sources = context.CatalogueSource.Where(p => p.Active).ToList();
                             List<long> latestLocalArticlesId = context.Article.Select(p => p.Id).ToList();
 
                             using (var wc = new WebClient())
@@ -113,10 +114,19 @@ namespace tiorem.agent
                                                                 newArticle.PubDate = pubDate;
                                                                 newArticle.SharingTitle = item.ArticleSharingTitle;
                                                                 newArticle.SourceId = source.Id;
-                                                                newArticle.SourceUrl = item.SourceUrl;
+                                                                newArticle.SourceUrl = item.SourceImageUrl;
+                                                                newArticle.ArticleUrl = item.ArticleUrl;
                                                                 newArticle.Title = item.ArticleTitle;
                                                                 newArticle.TweetId = item.TwitterId;
                                                                 newArticle.VideoUrl = item.ArticleVideoUrl;
+                                                                newArticle.Approved = false;
+                                                                newArticle.CategoryId = 1;
+                                                                newArticle.FavoriteHits = 0;
+                                                                newArticle.Hits = 0;
+                                                                newArticle.LikeHits = 0;
+                                                                newArticle.UnlikeHits = 0;
+                                                                 
+
                                                                 newArticles.Add(newArticle);
                                                             }
                                                             catch (Exception ex)
@@ -133,7 +143,7 @@ namespace tiorem.agent
                                                 {
                                                     context.Article.AddRange(newArticles);
                                                     context.SaveChanges();
-                                                    logger("SUCCESSFULLY" + logSeperator + source.Name + logSeperator + newArticles.Count + " items", true);
+                                                    logger("SUCCESSFULLY"+ logSeperator + string.Format("{0:00} items",newArticles.Count)  + logSeperator + source.Name , true);
                                                 }
                                                 catch (Exception ex)
                                                 {
@@ -163,7 +173,7 @@ namespace tiorem.agent
                             logger("DATABASE ERROR\t" + ex.ToString());
                         }
                     }
-                    
+
                     lblDuration.Text = ((int)(DateTime.Now.Subtract(now).TotalSeconds)).ToString() + " sn";
                     lblStatus.Text = "Waiting next run...";
                     isThreadRunning = false;
@@ -183,14 +193,45 @@ namespace tiorem.agent
 
         void logger(string msg, bool isError = true)
         {
-            string preTag = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + logSeperator + (isError ? "INFO" : "ERROR") + logSeperator;
-            File.AppendAllText(logFileName, preTag + msg + Environment.NewLine);
+            // Set Status to Locked
+            _readWriteLock.EnterWriteLock();
+            try
+            {
+                // Append text to the file
+                string preTag = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + logSeperator + (isError ? "INFO" : "ERROR") + logSeperator;
+                using (StreamWriter sw = File.AppendText(logFileName))
+                {
+                    sw.WriteLine(preTag + msg);
+                    sw.Close();
+                }
+            }
+            finally
+            {
+                // Release lock
+                _readWriteLock.ExitWriteLock();
+            }
         }
 
         void loggerApp(string msg, bool isError = true)
         {
-            string preTag = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + logSeperator + (isError ? "INFO" : "ERROR") + logSeperator;
-            File.AppendAllText(logAppfile, preTag + msg + Environment.NewLine);
+            
+            // Set Status to Locked
+            _readWriteLock.EnterWriteLock();
+            try
+            {
+                // Append text to the file
+                string preTag = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + logSeperator + (isError ? "INFO" : "ERROR") + logSeperator;
+                using (StreamWriter sw = File.AppendText(logAppfile))
+                {
+                    sw.WriteLine(preTag + msg);
+                    sw.Close();
+                }
+            }
+            finally
+            {
+                // Release lock
+                _readWriteLock.ExitWriteLock();
+            }
         }
 
         void logFileCreate(DateTime date)
@@ -200,22 +241,22 @@ namespace tiorem.agent
 
             logFileName = string.Format(logfilePattern, date);
             if (!File.Exists(logFileName))
-                File.Create(logFileName);
+                File.Create(logFileName).Close();
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
             myTimer.Enabled = true;
-            myTimer.Start(); 
+            myTimer.Start();
             loggerApp("Timer started");
             btnStart.Enabled = !myTimer.Enabled;
-           btnStopTimer.Enabled = myTimer.Enabled;
+            btnStopTimer.Enabled = myTimer.Enabled;
 
 
         }
 
         private void btnStopTimer_Click(object sender, EventArgs e)
-        { 
+        {
             myTimer.Stop();
             myTimer.Enabled = false;
             thread.Abort();
@@ -228,9 +269,9 @@ namespace tiorem.agent
 
         private void btnManuel_Click(object sender, EventArgs e)
         {
-            if(!isThreadRunning)
+            if (!isThreadRunning)
             {
-                thread = new Thread(new ThreadStart(execute));              
+                thread = new Thread(new ThreadStart(execute));
                 thread.Start();
                 loggerApp("Manuel Excuted started");
             }
@@ -250,7 +291,7 @@ namespace tiorem.agent
             loggerApp("Excuted started");
             myTimer.Interval = 1000 * 60 * (int)periode.Value;
 
-            thread = new Thread(new ThreadStart(execute));            
+            thread = new Thread(new ThreadStart(execute));
             thread.Start();
 
         }

@@ -26,7 +26,7 @@ namespace tiorem.agent.Database
         public string ImageUrl { get; set; }
         public string SourceUrl { get; set; }
         public Nullable<int> Followers { get; set; }
-        public Nullable<bool> Active { get; set; }
+        public bool Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Article { get; set; }
