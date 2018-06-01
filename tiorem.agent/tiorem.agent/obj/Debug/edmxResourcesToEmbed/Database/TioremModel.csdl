@@ -1,12 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="TIOREMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TIOREMEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Article" EntityType="TIOREMModel.Article" />
+    <EntitySet Name="ArticleTag" EntityType="TIOREMModel.ArticleTag" />
+    <EntitySet Name="CatalogueCategory" EntityType="TIOREMModel.CatalogueCategory" />
+    <EntitySet Name="CatalogueSource" EntityType="TIOREMModel.CatalogueSource" />
+    <EntitySet Name="CatalogueTag" EntityType="TIOREMModel.CatalogueTag" />
+    <EntitySet Name="User" EntityType="TIOREMModel.User" />
+    <AssociationSet Name="FK_Article_CatalogueCategory" Association="TIOREMModel.FK_Article_CatalogueCategory">
+      <End Role="CatalogueCategory" EntitySet="CatalogueCategory" />
+      <End Role="Article" EntitySet="Article" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Article_CatalogueSource" Association="TIOREMModel.FK_Article_CatalogueSource">
+      <End Role="CatalogueSource" EntitySet="CatalogueSource" />
+      <End Role="Article" EntitySet="Article" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Article_User" Association="TIOREMModel.FK_Article_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Article" EntitySet="Article" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArticleTag_Article" Association="TIOREMModel.FK_ArticleTag_Article">
+      <End Role="Article" EntitySet="Article" />
+      <End Role="ArticleTag" EntitySet="ArticleTag" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArticleTag_CatalogueTag" Association="TIOREMModel.FK_ArticleTag_CatalogueTag">
+      <End Role="CatalogueTag" EntitySet="CatalogueTag" />
+      <End Role="ArticleTag" EntitySet="ArticleTag" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CatalogueTag_User" Association="TIOREMModel.FK_CatalogueTag_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="CatalogueTag" EntitySet="CatalogueTag" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="Article">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int64" Nullable="false" />
-    <Property Name="SourceId" Type="Int32" />
-    <Property Name="CategoryId" Type="Int32" />
+    <Property Name="SourceId" Type="Int32" Nullable="false" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="ArticleUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="SourceUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="SharingTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -16,18 +49,19 @@
     <Property Name="TweetId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="VideoUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="FavoriteHits" Type="Int32" />
-    <Property Name="Hits" Type="Int32" />
-    <Property Name="LikeHits" Type="Int32" />
-    <Property Name="UnlikeHits" Type="Int32" />
-    <Property Name="Active" Type="Boolean" />
-    <Property Name="Approved" Type="Boolean" />
+    <Property Name="FavoriteHits" Type="Int32" Nullable="false" />
+    <Property Name="Hits" Type="Int32" Nullable="false" />
+    <Property Name="LikeHits" Type="Int32" Nullable="false" />
+    <Property Name="UnlikeHits" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Approved" Type="Boolean" Nullable="false" />
     <Property Name="ApprovedUserId" Type="Int32" />
     <Property Name="ApprovedAt" Type="DateTime" Precision="7" />
-    <Property Name="InsertedAt" Type="DateTime" Precision="7" />
-    <NavigationProperty Name="CatalogueCategory" Relationship="Self.FK_Article_CatalogueCategory" FromRole="Article" ToRole="CatalogueCategory" />
-    <NavigationProperty Name="ArticleTag" Relationship="Self.FK_ArticleTag_Article" FromRole="Article" ToRole="ArticleTag" />
-    <NavigationProperty Name="CatalogueSource" Relationship="Self.FK_CatalogueSource_Article" FromRole="Article" ToRole="CatalogueSource" />
+    <Property Name="InsertedAt" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="CatalogueCategory" Relationship="TIOREMModel.FK_Article_CatalogueCategory" FromRole="Article" ToRole="CatalogueCategory" />
+    <NavigationProperty Name="CatalogueSource" Relationship="TIOREMModel.FK_Article_CatalogueSource" FromRole="Article" ToRole="CatalogueSource" />
+    <NavigationProperty Name="User" Relationship="TIOREMModel.FK_Article_User" FromRole="Article" ToRole="User" />
+    <NavigationProperty Name="ArticleTag" Relationship="TIOREMModel.FK_ArticleTag_Article" FromRole="Article" ToRole="ArticleTag" />
   </EntityType>
   <EntityType Name="ArticleTag">
     <Key>
@@ -36,56 +70,62 @@
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ArticleId" Type="Int64" />
     <Property Name="TagId" Type="Int64" />
-    <NavigationProperty Name="Article" Relationship="Self.FK_ArticleTag_Article" FromRole="ArticleTag" ToRole="Article" />
-    <NavigationProperty Name="CatalogueTag" Relationship="Self.FK_ArticleTag_CatalogueTag" FromRole="ArticleTag" ToRole="CatalogueTag" />
+    <NavigationProperty Name="Article" Relationship="TIOREMModel.FK_ArticleTag_Article" FromRole="ArticleTag" ToRole="Article" />
+    <NavigationProperty Name="CatalogueTag" Relationship="TIOREMModel.FK_ArticleTag_CatalogueTag" FromRole="ArticleTag" ToRole="CatalogueTag" />
   </EntityType>
   <EntityType Name="CatalogueCategory">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CategoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Active" Type="Boolean" />
-    <NavigationProperty Name="Article" Relationship="Self.FK_Article_CatalogueCategory" FromRole="CatalogueCategory" ToRole="Article" />
+    <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Article" Relationship="TIOREMModel.FK_Article_CatalogueCategory" FromRole="CatalogueCategory" ToRole="Article" />
   </EntityType>
   <EntityType Name="CatalogueSource">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="SourceUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SourceUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Followers" Type="Int32" />
-    <Property Name="Active" Type="Boolean" />
-    <NavigationProperty Name="Article" Relationship="Self.FK_CatalogueSource_Article" FromRole="CatalogueSource" ToRole="Article" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Article" Relationship="TIOREMModel.FK_Article_CatalogueSource" FromRole="CatalogueSource" ToRole="Article" />
   </EntityType>
   <EntityType Name="CatalogueTag">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TagName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TagName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Hits" Type="Int32" />
-    <Property Name="InsertDate" Type="DateTime" Precision="7" />
-    <Property Name="InsertUserId" Type="Int32" />
-    <Property Name="Active" Type="Boolean" />
-    <NavigationProperty Name="ArticleTag" Relationship="Self.FK_ArticleTag_CatalogueTag" FromRole="CatalogueTag" ToRole="ArticleTag" />
+    <Property Name="InsertDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="InsertUserId" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ArticleTag" Relationship="TIOREMModel.FK_ArticleTag_CatalogueTag" FromRole="CatalogueTag" ToRole="ArticleTag" />
+    <NavigationProperty Name="User" Relationship="TIOREMModel.FK_CatalogueTag_User" FromRole="CatalogueTag" ToRole="User" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
+  <EntityType Name="User">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Surname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="InsertedAt" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="Article" Relationship="TIOREMModel.FK_Article_User" FromRole="User" ToRole="Article" />
+    <NavigationProperty Name="CatalogueTag" Relationship="TIOREMModel.FK_CatalogueTag_User" FromRole="User" ToRole="CatalogueTag" />
   </EntityType>
   <Association Name="FK_Article_CatalogueCategory">
-    <End Role="CatalogueCategory" Type="Self.CatalogueCategory" Multiplicity="0..1" />
-    <End Role="Article" Type="Self.Article" Multiplicity="*" />
+    <End Type="TIOREMModel.CatalogueCategory" Role="CatalogueCategory" Multiplicity="1" />
+    <End Type="TIOREMModel.Article" Role="Article" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CatalogueCategory">
         <PropertyRef Name="Id" />
@@ -95,21 +135,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ArticleTag_Article">
-    <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
-    <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Article">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ArticleTag">
-        <PropertyRef Name="ArticleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CatalogueSource_Article">
-    <End Role="CatalogueSource" Type="Self.CatalogueSource" Multiplicity="0..1" />
-    <End Role="Article" Type="Self.Article" Multiplicity="*" />
+  <Association Name="FK_Article_CatalogueSource">
+    <End Type="TIOREMModel.CatalogueSource" Role="CatalogueSource" Multiplicity="1" />
+    <End Type="TIOREMModel.Article" Role="Article" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CatalogueSource">
         <PropertyRef Name="Id" />
@@ -119,9 +147,33 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Article_User">
+    <End Type="TIOREMModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="TIOREMModel.Article" Role="Article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="ApprovedUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArticleTag_Article">
+    <End Type="TIOREMModel.Article" Role="Article" Multiplicity="0..1" />
+    <End Type="TIOREMModel.ArticleTag" Role="ArticleTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Article">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArticleTag">
+        <PropertyRef Name="ArticleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ArticleTag_CatalogueTag">
-    <End Role="CatalogueTag" Type="Self.CatalogueTag" Multiplicity="0..1" />
-    <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
+    <End Type="TIOREMModel.CatalogueTag" Role="CatalogueTag" Multiplicity="0..1" />
+    <End Type="TIOREMModel.ArticleTag" Role="ArticleTag" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CatalogueTag">
         <PropertyRef Name="Id" />
@@ -131,28 +183,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="TIOREMEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Article" EntityType="Self.Article" />
-    <EntitySet Name="ArticleTag" EntityType="Self.ArticleTag" />
-    <EntitySet Name="CatalogueCategory" EntityType="Self.CatalogueCategory" />
-    <EntitySet Name="CatalogueSource" EntityType="Self.CatalogueSource" />
-    <EntitySet Name="CatalogueTag" EntityType="Self.CatalogueTag" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-    <AssociationSet Name="FK_Article_CatalogueCategory" Association="Self.FK_Article_CatalogueCategory">
-      <End Role="CatalogueCategory" EntitySet="CatalogueCategory" />
-      <End Role="Article" EntitySet="Article" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ArticleTag_Article" Association="Self.FK_ArticleTag_Article">
-      <End Role="Article" EntitySet="Article" />
-      <End Role="ArticleTag" EntitySet="ArticleTag" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CatalogueSource_Article" Association="Self.FK_CatalogueSource_Article">
-      <End Role="CatalogueSource" EntitySet="CatalogueSource" />
-      <End Role="Article" EntitySet="Article" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ArticleTag_CatalogueTag" Association="Self.FK_ArticleTag_CatalogueTag">
-      <End Role="CatalogueTag" EntitySet="CatalogueTag" />
-      <End Role="ArticleTag" EntitySet="ArticleTag" />
-    </AssociationSet>
-  </EntityContainer>
+  <Association Name="FK_CatalogueTag_User">
+    <End Type="TIOREMModel.User" Role="User" Multiplicity="1" />
+    <End Type="TIOREMModel.CatalogueTag" Role="CatalogueTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CatalogueTag">
+        <PropertyRef Name="InsertUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

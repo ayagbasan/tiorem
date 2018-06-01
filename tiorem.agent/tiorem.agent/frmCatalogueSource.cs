@@ -14,11 +14,16 @@ using System.Xml.Serialization;
 using tiorem.agent.Model.Xml2CSharp;
 using System.Linq;
 using tiorem.agent.Database;
+using tiorem.agent.Database.Model;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace tiorem.agent
 {
     public partial class frmCatalogueSource : Form
     {
+        List<CatalogueSource> catalogueSources;
+
         public frmCatalogueSource()
         {
             InitializeComponent();
@@ -26,6 +31,9 @@ namespace tiorem.agent
 
         private void btnGet_Click(object sender, EventArgs e)
         {
+
+            catalogueSources = new List<CatalogueSource>();
+            Repository<TioremSource> repoTiorem = new Repository<TioremSource>();
             var m_strFilePath = txtURL.Text;
             string xmlStr;
             using (var wc = new WebClient())
@@ -73,6 +81,8 @@ namespace tiorem.agent
 
 
                                         catalogueSources.Add(catalogueSource);
+
+                                        //repoTiorem.Insert(catalogueSource);
                                     }
                                 }
                             }
@@ -84,11 +94,16 @@ namespace tiorem.agent
                 gridRemote.DataSource = catalogueSources.OrderBy(p=>p.Name);
                 gridRemote.Refresh();
 
+
+
+
                 //using (TIOREMEntities context = new TIOREMEntities())
                 //{
                 //    context.CatalogueSource.AddRange(catalogueSources);
                 //    context.SaveChanges();
                 //}
+
+                saveData(catalogueSources);
             }
 
 
@@ -97,6 +112,29 @@ namespace tiorem.agent
 
 
 
+        }
+
+
+        void saveData (List<CatalogueSource> data)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.mlab.com/api/1/databases/tiorem/collections/CatalogueSource?apiKey=SmUMfyNUqrOpSvfko7pFiKWoRqxhk0eT");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string json = JsonConvert.SerializeObject(data);
+
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
         }
     }
 }

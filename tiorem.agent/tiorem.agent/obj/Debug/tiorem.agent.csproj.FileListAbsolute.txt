@@ -16,3 +16,12 @@ C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Debug\tiorem.a
 C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\obj\Debug\tiorem.agent.frmCatalogueSource.resources
 C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\Newtonsoft.Json.dll
 C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\Newtonsoft.Json.xml
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\MongoDB.Bson.dll
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\MongoDB.Driver.Core.dll
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\MongoDB.Driver.dll
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\DnsClient.dll
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\System.Buffers.dll
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\MongoDB.Bson.xml
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\MongoDB.Driver.xml
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\MongoDB.Driver.Core.xml
+C:\Users\ay1438\source\repos\tiorem\tiorem.agent\tiorem.agent\bin\Debug\DnsClient.xml

@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using tiorem.agent.Database;
+using tiorem.agent.Database.Model;
 using tiorem.agent.Properties;
 using Xml2CSharp;
 
@@ -21,6 +19,14 @@ namespace tiorem.agent
 {
     public partial class Form1 : Form
     {
+        //mongodb://<dbuser>:<dbpassword>@ds239930.mlab.com:39930/tiorem
+        //public static string connectionString = "mongodb://aymk:aymk2018@ds239930.mlab.com:39930/tiorem";
+        public static string connectionString = "mongodb+srv://aymk:aymk2018@tiorem-fuvoi.mongodb.net";
+        public static string databaseName = "TIOREM";
+        public List<TioremArticle> tioremArticles;
+        Repository<TioremArticle> repoTiorem = new Repository<TioremArticle>();
+
+
         static string logPath = Application.StartupPath + "\\log";
         static string logfilePattern = logPath + "\\log_{0:yyyyMMddHHmm}.txt";
         static string logAppfile = logPath + "\\logApp.txt";
@@ -191,6 +197,151 @@ namespace tiorem.agent
             }
         }
 
+        void executeMongo()
+        {
+            if (thread != null)
+            {
+                if (!isThreadRunning)
+                {
+                    isThreadRunning = true;
+                    pictureBox1.Image = Resources.if_recycle_1054994;
+                    lblStatus.Text = "Running...";
+                    string xmlContent;
+                    DateTime now = DateTime.Now;
+                    DateTime prevMinute = now.AddMinutes(-60);
+
+                    lblLastRun.Text = now.ToString("dd.MM.yyyy HH:mm:ss");
+                    lblNextRun.Text = now.AddMilliseconds(myTimer.Interval).ToString("dd.MM.yyyy HH:mm:ss");
+                    logFileCreate(now);
+
+                    using (TIOREMEntities context = new TIOREMEntities())
+                    {
+                        try
+                        {
+                            List<CatalogueSource> sources = context.CatalogueSource.Where(p => p.Active).ToList();
+                            List<long> latestLocalArticlesId = context.Article.Select(p => p.Id).ToList();
+
+                            using (var wc = new WebClient())
+                            {
+                                wc.Encoding = Encoding.UTF8;
+                                var xmlDoc = new XmlDocument();
+
+
+                                foreach (var source in sources)
+                                {
+                                    try
+                                    {
+                                        xmlContent = wc.DownloadString(string.Format(urlPattern, source.Id));
+                                        xmlDoc.LoadXml(xmlContent);
+                                        Xml response = null;
+                                        XmlSerializer serializer = new XmlSerializer(typeof(Xml));
+                                        using (XmlReader reader = new XmlNodeReader(xmlDoc))
+                                        {
+                                            try
+                                            {
+                                                response = (Xml)serializer.Deserialize(reader);
+
+
+                                                List<Database.Article> newArticles = new List<Database.Article>();
+                                                TioremArticle newArticle = null;
+
+                                                foreach (var item in response.Articles.Article)
+                                                {
+                                                    if (item.ArticleId.HasValue)
+                                                    {
+                                                        DateTime pubDate = Convert.ToDateTime(item.ArticlePubDate);
+                                                        if (latestLocalArticlesId.IndexOf(item.ArticleId.Value) == -1)
+                                                        {
+                                                            try
+                                                            {
+
+                                                                newArticle = new TioremArticle();
+                                                                newArticle.Active = true;
+                                                                newArticle.Approved = false;
+                                                                newArticle.Body = item.ArticleBody;
+                                                                newArticle.DetailedDate = item.ArticleDetailedDate;
+                                                                newArticle.Id = item.ArticleId.Value;
+                                                                newArticle.ImageUrl = item.ArticleImageUrl;
+                                                                newArticle.InsertedAt = now;
+                                                                newArticle.PubDate = pubDate;
+                                                                newArticle.SharingTitle = item.ArticleSharingTitle;
+                                                                newArticle.SourceId = source.Id;
+                                                                newArticle.SourceUrl = item.SourceImageUrl;
+                                                                newArticle.ArticleUrl = item.ArticleUrl;
+                                                                newArticle.Title = item.ArticleTitle;
+                                                                newArticle.TweetId = item.TwitterId;
+                                                                newArticle.VideoUrl = item.ArticleVideoUrl;
+                                                                newArticle.Approved = false;
+                                                                newArticle.CategoryId = 1;
+                                                                newArticle.FavoriteHits = 0;
+                                                                newArticle.Hits = 0;
+                                                                newArticle.LikeHits = 0;
+                                                                newArticle.UnlikeHits = 0;
+
+                                                                repoTiorem.Insert(newArticle);
+                                                            }
+                                                            catch (Exception ex)
+                                                            {
+                                                                logger(item.ArticleId + logSeperator + "Not Converted Local Format" + logSeperator + ex.ToString());
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                                try
+                                                {
+                                                    context.Article.AddRange(newArticles);
+                                                    context.SaveChanges();
+                                                    logger("SUCCESSFULLY" + logSeperator + string.Format("{0:00} items", newArticles.Count) + logSeperator + source.Name, true);
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    logger(source.Name + logSeperator + "Not Saved to Database" + logSeperator + ex.ToString());
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+
+                                                logger(source.Name + logSeperator + "Not Deserialize" + logSeperator + ex.ToString());
+                                            }
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+
+                                        logger(source.Name + logSeperator + "Not Downloaded" + logSeperator + ex.ToString());
+                                    }
+
+                                }
+
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            logger("DATABASE ERROR\t" + ex.ToString());
+                        }
+                    }
+
+                    lblDuration.Text = ((int)(DateTime.Now.Subtract(now).TotalSeconds)).ToString() + " sn";
+                    lblStatus.Text = "Waiting next run...";
+                    isThreadRunning = false;
+                    pictureBox1.Image = Resources.if_check_1055094;
+                    loggerApp("Excuted comleted");
+                }
+                else
+                {
+                    loggerApp("Thread is running");
+                }
+            }
+            else
+            {
+                loggerApp("Thread not set");
+            }
+        }
+
         void logger(string msg, bool isError = true)
         {
             // Set Status to Locked
@@ -271,7 +422,7 @@ namespace tiorem.agent
         {
             if (!isThreadRunning)
             {
-                thread = new Thread(new ThreadStart(execute));
+                thread = new Thread(new ThreadStart(executeMongo));
                 thread.Start();
                 loggerApp("Manuel Excuted started");
             }
